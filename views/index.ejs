@@ -1,0 +1,52 @@
+<!doctype htmlos>
+<html>
+    <head>
+    <title><%= title %></title>
+    <!-- Toggle Switch -->
+      <link rel='stylesheet' href='/stylesheets/toggle-switch.css'>
+      <link rel='stylesheet' href='/stylesheets/style.css' />
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+      <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+      <script src="/javascripts/inout.js"></script>
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    </head>
+
+<hader>
+    <nav>
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/setting">Setting</a></li>
+        </ul>
+    </nav>
+</hader>
+
+<body>
+  <h1><%= title %></h1>
+  <p>Welcome to <%= title %></p>
+
+
+  <div id="main">
+      <% for(var key in user_list) {%>
+          <% var user = user_list[key];%>
+          <div class="inout_switch col-sm-5">
+          <label class="switch-light switch-android">
+            <% if (user.in_room) {%>
+             <input type="checkbox" checked>
+            <% } else { %>
+             <input type="checkbox">
+            <% } %>
+              <span>
+                  <label class="user-name"><%= user.user_id %></label>
+                  <span id="" onClick="send('<%= user.user_id %>')">out</span>
+                  <span id="" onClick="send('<%= user.user_id %>')">in</span>
+              </span>
+              <a></a>
+          </label>
+          </div>
+      <% } %>
+  </div>
+
+</body>
+</html>

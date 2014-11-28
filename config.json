@@ -1,0 +1,49 @@
+{
+    "service": {
+        "host": "192.168.0.8",
+        "port": "3000"
+    },
+    "users": {
+        "person": {
+            "url" : "http://192.168.0.8:3001/api/user/"
+        },
+        "currentUsers": {
+            "url" : "http://192.168.0.8:3001/api/users/current/"
+        }
+    },
+    "actions": {
+        "voice": {
+            "misaki": {
+                "url": "http://133.30.159.224:8080/axis2/services/MisakiService/speech?param0="
+                },
+            "ai": {
+                "url": "http://133.30.159.224:8080/axis2/services/TsukuyomiService/speak?param0="
+            }
+        },
+        "sound": {
+            "url": "http://133.30.159.224:8080/axis2/services/MP3PlayService/play?param0="
+            },
+        "tweet": {
+            "url": "http://192.168.0.23:8080/axis2/services/MisakiTweetService/tweet?paramString="
+        }
+    },
+     "database": {
+        "url": "mongodb://192.168.0.21/inout",
+        "options": {
+            "server": {
+                "socketOptions": { "keepAlive" : 1}
+            },
+            "user": "kenjiro",
+            "pass": "kenjiro+"
+        }
+    },
+    "fluentd": {
+        "server": {
+            "ip": "192.168.0.23",
+            "port": "24224"
+        },
+        "options": {
+            "timeout": 3.0
+        }
+    }
+}

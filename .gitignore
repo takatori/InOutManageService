@@ -1,0 +1,8 @@
+# Mac
+.DS_Store
+
+# .svn/ディレクトリ以下のすべてのファイルを無視する
+.svn/
+
+# nodeモジュールは除外
+node_modules/
