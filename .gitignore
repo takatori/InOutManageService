@@ -6,3 +6,6 @@
 
 # nodeモジュールは除外
 node_modules/
+
+# config.jsonは設定ファイルなので除外
+config.json
