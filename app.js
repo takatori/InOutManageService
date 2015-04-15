@@ -1,108 +1,90 @@
-
-// 必要なモジュールの読み込み
+// ******************* Module import ***************************************
 var express = require('express');
-var http = require('http');
 var path = require('path');
-var mongoose = require('mongoose');
-// Load config
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var http         = require('http');
+var mongoose     = require('mongoose');
+var session      = require('express-session');
+
+// ******************* Service Setting ***************************************
 var config = require('./config');
-
-// fluentd初期化
-var fluentLogger = require('fluent-logger').configure('inout', {
-  host: config.fluentd.server.ip,
-  port: config.fluentd.server.port,
-  timeout: config.fluentd.options.timeout
-});
-
+var routes = require('./routes/index');
+var users  = require('./routes/users');
+var apis   = require('./routes/apis');
 
 var app = express();
-// all environments
-app.set('host', config.service.host);
-app.set('port', process.env.PORT || config.service.port);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-app.use(express.favicon());
-app.use(express.logger('dev')); // 開発中に有効にしておくと良い アクセス情報の表示など
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.methodOverride());
-app.use(app.router);
+var port   = process.env.PORT || 3000;
+
+// ******************* View Setting ***************************************
+// view engine setup
+//app.set('views', path.join(__dirname, 'views'));
+var ECT = require('ect');
+var ectRenderer = ECT({ watch: true, root: __dirname + '/views', ext: '.ect'});
+app.engine('ect', ectRenderer.render);
+app.set('view engine', 'ect');
+
+// ******************* DB Setting ***************************************
+// set the 'dbUrl' to the mongodb url that corresponds to the
+// environment we are in
+// uriの設定
+// herokuで利用するときはprocess.env.MONGOLAB_URI
+// ローカルではapp.setting.envの設定を利用
+app.set('dbUrl', process.env.MONGOLAB_URI || config.db[process.env.NODE_ENV]);
+// connect mongoose to the mongo dbUrl
+mongoose.connect(app.get('dbUrl'), function(err, res) {
+    if (err) {
+        console.log ('ERROR connecting to: ' + app.get('dbUrl') + '.' + err);
+    } else {
+        console.log ('Succeeded connecting to: ' + app.get('dbUrl'));
+    }
+});
+
+// ******************* App Setting ***************************************
+// uncomment after placing your favicon in /public
+//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// エラーハンドリング
-app.use(function(err, req, res, next){
-  res.status(500);
-  res.send(err.message);
+// ******************* Routing Setting ***************************************
+app.use('/', routes);
+app.use('/apis', apis);
+
+// ******************* Error Handlers ***************************************
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
 }
 
-
-// DB初期化
-// Bootstrap db connection
-// Connect to mongodb
-var connect = function () {
-  mongoose.connect(config.database.url, config.database.options);
-};
-connect();
-
-// Error handler
-mongoose.connection.on('error', function (err) {
-  console.log(err);
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
 });
 
-// Reconnect when closed
-mongoose.connection.on('disconnected', function () {
-  connect();
-});
-
-
-// Bootstrap models
-require('./models/account');
-
-// ====== ルーティング設定 ================================================
-var main = require('./routes/index');
-var settings = require('./routes/setting');
-var api = require('./routes/api');
-
-// 順番がかなり重要
-// 例えば，/setting/init に前に /setting/:id を書くと全て/:idにバインドされてしまう
-
-// 初期化
-app.get('/setting/init', settings.init);
-
-// 設定系 
-app.get('/setting', settings.index);
-app.get('/setting/:id', settings.load);
-app.post('/setting/:id', settings.addAction);
-app.get('/setting/delete/:id', settings.deleteAction);
-app.get('/setting/test/:id', settings.testAction);
-
-// アプリ本体
-app.get('/inout/:id', main.inout);
-app.get('/', main.index);
-
-// APIs
-app.get('/api/currentNumberOfPeople', api.getCurrentNumberOfPeople);
-app.get('/api/inout/:id', api.inout);
-app.get('/api/in/:id', api.in_room);
-app.get('/api/out/:id', api.out_room);
-app.get('/api/getStatus/:id', api.getStatus);
-// ===================================================================
-
-
-// ハンドルされていない例外が発生してもプログラムを終了させなくする
-// できるかぎり利用しないほうが良い
-process.on('uncaughtException', function (err) {
-    // エラーの内容をコンソールに出力
-    console.log(err);
-    // スタックトレースをコンソールに出力
-    console.trace();
-});
-
-http.createServer(app).listen(app.get('port'), app.get('host'), function(){
-  console.log('Express server listening on' + app.get('host') + app.get('port'));
-});
+// ******************* App Setting ***************************************
+app.listen(port);
+module.exports = app;
