@@ -3,6 +3,7 @@ var router = express.Router();
 var request = require('request');
 var Account = require('../models/accounts').Account;
 var config = require('../config');
+var logger = require('../utils/logger.js');
 
 // GET
 /* List */
@@ -26,11 +27,11 @@ router.get('/accounts/:id/inout', function(req, res) {
         if (err) {
             res.status(500).json(err);
         } else {
-            console.log(account);
             account.changeState(function(err) {
                 if (err) res.status(500).json(err);
                 else     res.status(200).json(account.status);
             });
+            logger.send(userId, account.status);
         }
     });    
 });

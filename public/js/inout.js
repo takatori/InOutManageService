@@ -5,8 +5,11 @@ $(function(){
         success: function(users) {
             users.forEach(function(user){
                 var grayscale = '';
-                if (user.status === 'in') grayscale = '100%';
-                else grayscale = '0%';
+                if (user.status === 'in') {
+                    grayscale = '0%';
+                } else {
+                    grayscale = '100%';
+                }
                 
                 $('#user-thumbnail-wrapper').append(
                     '<div class="col-lg-2"><div id='+ user.id +' class="user">'
@@ -27,9 +30,11 @@ $(function(){
             url : 'http://localhost:3000/apis/accounts/' + id + '/inout',
             success: function(status) {
                 var grayscale = '';
-                if (status === 'in') grayscale = '100%';
-                else grayscale = '0%';                
-                console.log(grayscale);
+                if (status === 'in') {
+                    grayscale = '0%';
+                } else {
+                    grayscale = '100%';
+                }                
                 $self.find('img').attr({style:'-webkit-filter:grayscale(' + grayscale +');'});
             },
             error: function(err) {

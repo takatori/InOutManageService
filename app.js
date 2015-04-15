@@ -18,6 +18,14 @@ var apis   = require('./routes/apis');
 var app = express();
 var port   = process.env.PORT || 3000;
 
+// ******************* Logging Setting ***************************************
+// fluentd初期化
+var fluentLogger = require('fluent-logger').configure('inout', {
+  host: config.fluentd.server.ip,
+  port: config.fluentd.server.port,
+  timeout: config.fluentd.options.timeout
+});
+
 // ******************* View Setting ***************************************
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));

@@ -13,5 +13,14 @@ module.exports = {
         apis: {
             current : "/apis/users/current"
         }
+    },
+    "fluentd": {		
+        "server": {		
+            "ip": "192.168.0.23",		
+            "port": "24224"		
+        },		
+        "options": {		
+            "timeout": 3.0		
+        }
     }
 };
