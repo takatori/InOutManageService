@@ -1,11 +1,11 @@
 module.exports = {
     db: {
-        production : "mongodb://mongoserv/inout",
+        production : "mongodb://localhost/InOutManageService",
         development: "mongodb://localhost/InOutManageService",
         test       : "mongodb://localhost/InOutManageService"
     },
     users: {
-        db: {
+        url: {
             production : "http://inserv:3001",
             development: "http://localhost:3001",
             test       : "http://localhost:3001"

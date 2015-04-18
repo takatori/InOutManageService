@@ -16,6 +16,11 @@ AccountSchema.methods = {
         if(this.status === 'in') this.status = 'out';
         else this.status = 'in';
         this.save(callback);
+    },
+
+    update: function(icon_img, callback) {
+        this.icon_img = icon_img;
+        this.save(callback);
     }
 };
 
