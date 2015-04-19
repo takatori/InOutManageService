@@ -303,5 +303,3 @@ function execActionPromise(actionURL) {
         });
     });
 }
-
-
