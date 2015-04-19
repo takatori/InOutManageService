@@ -9,8 +9,10 @@ var Account = require('../models/accounts').Account;
 var config = require('../config');
 var logger = require('../utils/logger.js');
 
-// GET
-/* List */
+/**
+ * 入退室管理システムを利用しているユーザアカウント一覧を表示
+ * @return {[Account]} 
+ */
 router.get('/accounts', function(req, res, next) {
 
     loadAccountListPromise()
@@ -22,7 +24,11 @@ router.get('/accounts', function(req, res, next) {
         });
 });
 
-// 状態確認
+/**
+ * 入退室状態を取得する
+ * @param {String} id
+ * @return {String} status: "in" or "out"
+ */
 router.get('/accounts/:id/status', function(req, res){
 
     var userId = req.params.id;
@@ -36,7 +42,11 @@ router.get('/accounts/:id/status', function(req, res){
     
 });
 
-// 在室状態変更
+/**
+ * 入退室状態を変更し、設定されているアクションを実行する
+ * @param {String} id
+ * @return {String} status: "in" or "out"
+ */
 router.get('/accounts/:id/inout', function(req, res) {
 
     var userId = req.params.id;
@@ -57,11 +67,17 @@ router.get('/accounts/:id/inout', function(req, res) {
         });
 });
 
-// 新年度の際、現在のメンバーでなければアカウント削除
+/**
+ * アカウントを更新する
+ * UserManageServiceから現在研究室に所属しているユーザ一覧を取得
+ * アカウントがないユーザの新規アカウントを追加
+ * 現在のアカウントのアイコン画像を更新
+ * 卒業したユーザのアカウントを削除
+ */
 router.get('/accounts/update', function(req, res, next) {
 
     Promise.all([fetchCurretUserPromise(), loadAccountListPromise()])
-        .then(classifyUser) // 名前変更する
+        .then(updateAccounts) 
         .then(function(result){
             res.status(200).send('ok');            
         })
@@ -70,21 +86,39 @@ router.get('/accounts/update', function(req, res, next) {
         });
 });
 
-
-
-
-// 現在の在室人数を取得
-router.get('/accounts/count', function(req, res, next) {
+/**
+ * 現在、研究室にいるユーザの人数を返す
+ * @return {int} count
+ */
+router.get('/accounts/in/count', function(req, res, next) {
     Account.countPeople(function(err, count) {
         if (err) {
-            res.status(500).json();            
+            res.status(500).json(err);            
         } else {
             res.status(200).json(count);
         }
     });
 });
 
+/**
+ * 現在、研究室にいるユーザ一覧を返す
+ * @return {[Account]} 
+ */
+router.get('/accounts/in/list', function(req, res, next) {
+
+    var query = {status: 'in'};
+    Account.find(query, function(err, accounts) {
+        if (err) {
+            res.status(500).json(err);            
+        } else {
+            res.status(200).json(accounts);
+        }
+    });
+});
+
+
 module.exports = router;
+
 
 function fetchCurretUserPromise() {
 
@@ -152,11 +186,11 @@ function changeStatePromise(account) {
     });
 }
 
-function classifyUser(results) {
-
-    var users = result[0];
-    var accounts = result[1];
-
+function updateAccounts(results) {
+    
+    var users = results[0];
+    var accounts = results[1];
+    
     // 新しいメンバー
     var newUsers = users.filter(function(user) {
         return (accounts.indexOf(user) < 0);
@@ -199,11 +233,11 @@ function updateAccountPromise(currentUsers) {
     return new Promise(function(resolve, reject){
         currentUsers.forEach(function(u){
             Account.load(u.id, function(err, account){
-                if (err) {
+                if (err || !account) {
                     reject(err);
                 } else {
-                    account.udpate(u.icon_img, function(err){
-                        if (err) reject(err);
+                    account.update(u.icon_img, function(err){
+                        if (err || !account) reject(err);
                         else resolve();                        
                     });
                 }
