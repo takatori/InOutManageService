@@ -28,6 +28,39 @@ footer {
     margin-top: 50px;
 }
 
+.out-user{
+    -webkit-filter: grayscale(100%)  blur(3px);
+}
+
 .logo{
     margin-top: -22px;
 }
+
+figure {
+	position: relative;
+	width: 300px;
+}
+figure img {
+	position: relative;
+	z-index: 2;
+}
+figure h3,
+figure p {
+	position: absolute;
+	bottom: 0;
+	left: 10px;
+	z-index: 1;
+	opacity: 0;
+	-webkit-transition: .3s;
+	transition: .3s;
+}
+figure:hover h3 {
+	bottom: -35px;
+	opacity: 1;
+}
+figure:hover p {
+	bottom: -58px;
+	opacity: 1;
+}
+
+
