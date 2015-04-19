@@ -12,7 +12,6 @@ var session      = require('express-session');
 // ******************* Service Setting ***************************************
 var config = require('./config');
 var routes = require('./routes/index');
-var users  = require('./routes/users');
 var apis   = require('./routes/apis');
 
 var app = express();
