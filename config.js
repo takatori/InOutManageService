@@ -1,6 +1,6 @@
 module.exports = {
     db: {
-        production : "mongodb://localhost/InOutManageService",
+        production : "mongodb://inserv/InOutManageService",
         development: "mongodb://localhost/InOutManageService",
         test       : "mongodb://localhost/InOutManageService"
     },
