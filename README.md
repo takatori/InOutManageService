@@ -1,7 +1,6 @@
 I/O Manage Service
 ==================
-![top](https://github.com/takatori/InOutManageService/images/top.jpg)
-
+![top](https://github.com/takatori/InOutManageService/blob/master/images/top.jpg)
 ## Description
 シンプルな入退室管理システムです  
 研究室メンバーの在室状況を管理します  
