@@ -7,6 +7,7 @@ var concat = require('gulp-concat');
 var imagemin = require('gulp-imagemin');
 var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
+var browserify = require('browserify'); //
 
 var paths = {
     scripts: ['public/js/**.js'],
