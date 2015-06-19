@@ -280,9 +280,11 @@ function fetchActionURLPromise(account) {
         request.post(url, query, function (err, response, body) {
             if (!err && response.statusCode == 200) {
                 var actions = JSON.parse(body);
+                var actionURLs = [];
                 actions.forEach(function(actionURL){
-                    resolve(actionURL);                    
+                    actionURLs.push(actionURL);
                 });
+                resolve(actionURLs);
             } else {
                 reject(new Error(err));
             }
@@ -291,15 +293,22 @@ function fetchActionURLPromise(account) {
 }
 
 
-function execActionPromise(actionURL) {
+function execActionPromise(actionURLs) {
+
+    var requests = [];
     
-    return new Promise(function (resolve, reject) {
-        request.get(actionURL, function(err, response, result) {
-            if (!err && response.statusCode == 200) {
-                resolve();
-            } else {
-                reject(new Error(err));
-            }
+    actionURLs.forEach(function(actionURL){
+        var action = new Promise(function(resolve, reject){
+            request.get(actionURL, function(err, response, result) {
+                if (!err && response.statusCode == 200) {
+                    resolve();
+                } else {
+                    reject(new Error(err));
+                }
+            });            
         });
+        requests.push(action);
     });
+
+    return Promise.all(requests);
 }
