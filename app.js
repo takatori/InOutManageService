@@ -20,9 +20,13 @@ var port   = process.env.PORT || 3000;
 // ******************* Logging Setting ***************************************
 // fluentd初期化
 var fluentLogger = require('fluent-logger').configure('inout', {
-  host: config.fluentd.server.ip,
-  port: config.fluentd.server.port,
-  timeout: config.fluentd.options.timeout
+    host: config.fluentd.server.ip,
+    port: config.fluentd.server.port,
+    timeout: config.fluentd.options.timeout
+    /*
+    host: config.get("fluentd.server.ip"),
+    port: config.get("fluentd.server.port"),
+    timeout: config.get("fluentd.options.timeout")*/
 });
 
 // ******************* View Setting ***************************************
