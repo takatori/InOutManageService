@@ -18,17 +18,35 @@ UserManageServiceの設定情報に応じて入退室時にアクションを実
 ### 入退室
 
 ## Install
-* Download
-```
+### Download
+```bash
     git clone https://github.com/takatori/InOutManageService
 ```
-* Run(dev-mode)
+    
+### Run(dev-mode)
+#### 環境変数の設定
+```bash
+$ export NODE_ENV=development
+$ export PORT=3000
 ```
-    ./run.sh
+
+#### 実行
+```bash
+$ nodemon app.js
 ```
-* Run(product-mode)
+
+### Run(product-mode)
+Supervisorで管理すること
+
+#### 環境変数の設定
+```bash
+$ export NODE_ENV=production
+$ export PORT=3000
 ```
-    ./run.sh -m prod
+
+#### 実行
+```bash
+$ node app.js
 ```
     
 ## APIs

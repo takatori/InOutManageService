@@ -1,7 +1,7 @@
 $(function(){
     $.ajax({
         type: 'GET',
-        url : 'http://localhost:3000/apis/accounts',
+        url : 'http://127.0.0.1:3000/apis/accounts',
         success: function(users) {
             users.forEach(function(user){
 
@@ -28,7 +28,7 @@ $(function(){
         var $self = $(this);
         $.ajax({
             type: 'GET',
-            url : 'http://localhost:3000/apis/accounts/' + id + '/inout',
+            url : 'http://127.0.0.1:3000/apis/accounts/' + id + '/inout',
             success: function(status) {
                 if (status === 'in') {
                     $self.find('img').removeClass('out-user');
