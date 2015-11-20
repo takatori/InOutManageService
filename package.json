@@ -18,7 +18,6 @@
     "express": "~4.13.3",
     "express-session": "~1.11.3",
     "fluent-logger": "^0.3.0",
-    "forever": "^0.15.1",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-imagemin": "^2.3.0",
