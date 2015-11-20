@@ -1,6 +1,7 @@
 I/O Manage Service
 ==================
 ![top](https://github.com/takatori/InOutManageService/blob/master/images/top.jpg)
+
 ## Description
 シンプルな入退室管理システムです  
 研究室メンバーの在室状況を管理します  
@@ -8,8 +9,9 @@ UserManageServiceに登録されているユーザのみ利用可能です
 UserManageServiceの設定情報に応じて入退室時にアクションを実行可能です
 
 ## Requirement
-* node.js >= v0.12.0
-* UserManageService
+* node.js == v0.12.7
+* npm == 2.11.3
+* [UserManageService](https://github.com/takatori/UserManageService)
 
 ## Usage
 ### 設定
@@ -17,12 +19,43 @@ UserManageServiceの設定情報に応じて入退室時にアクションを実
 
 ### 入退室
 
+
 ## Install
 ### Download
 ```bash
     git clone https://github.com/takatori/InOutManageService
 ```
-    
+
+### nvmインストール
+nodejsのバージョンん管理ツールをインストール
+
+```bash
+$ git clone git://github.com/creationix/nvm.git ~/.nvm
+$ source ~/.nvm/nvm.sh
+```
+
+### nvmを使ってnode.jsをインストール
+- バージョンを指定してnodeをインストール
+  - npmも自動で入る
+
+```bash
+$ nvm install v0.12.7
+```
+
+- デフォルトのnodeバージョンを設定
+
+```bash
+$ nvm alias default v0.10.26
+```
+
+- 参考
+  -http://qiita.com/akippiko/items/3708016fc43da088021c
+
+### packageインストール
+```bash
+$ npm install
+```
+
 ### Run(dev-mode)
 #### 環境変数の設定
 ```bash
@@ -48,36 +81,14 @@ $ export PORT=3000
 ```bash
 $ node app.js
 ```
-    
-## APIs
-### /apis/accounts
-* 入退室管理システムを利用しているユーザアカウント一覧を表示
-* @return {[Account]}
-
-### /apis/accounts/:id/status
-* 入退室状態を取得する
-* @param {String} id
-* @return {String} status: "in" or "out"
-
-### /apis/accounts/:id/inout
-* 入退室状態を変更し、設定されているアクションを実行する
-* @param {String} id
-* @return {String} status: "in" or "out"
-
-### /apis/accounts/update
-* アカウントを更新する
-* UserManageServiceから現在研究室に所属しているユーザ一覧を取得
-* アカウントがないユーザの新規アカウントを追加
-* 現在のアカウントのアイコン画像を更新
-* 卒業したユーザのアカウントを削除
-
-### /apis/accounts/in/count
-* 現在、研究室にいるユーザの人数を返す
-* @return {int} count
-
-### /apis/accounts/in/list
-* 現在、研究室にいるユーザ一覧を返す
-* @return {[Account]} 
 
 
+## Troubles
+### 起動しない
+- 原因: すでにプロセスが立ち上がっていてportが使用されている
+- 対策: portを使用しているプロセスをkillする
+
+### 起動しない2
+- 原因: mongoに接続できない
+- 対策: mongoが立ち上がっているか、接続できるかを確認する
 
