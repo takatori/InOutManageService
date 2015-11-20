@@ -57,13 +57,20 @@ $ npm install
 ```
 
 ### Run(dev-mode)
-#### 環境変数の設定
+- 環境変数の設定
 ```bash
 $ export NODE_ENV=development
 $ export PORT=3000
 ```
 
-#### 実行
+- gulp実行
+  - watchにより変更を検知するとgulpが自動で走るようになる
+
+```bash
+$ gulp watch
+```
+
+-  実行
 ```bash
 $ nodemon app.js
 ```
@@ -71,20 +78,25 @@ $ nodemon app.js
 ### Run(product-mode)
 Supervisorで管理すること
 
-#### 環境変数の設定
+- 環境変数の設定
 ```bash
 $ export NODE_ENV=production
 $ export PORT=3000
 ```
 
-#### 実行
+- gulp実行
+```bash
+$ gulp 
+```
+
+- 実行
 ```bash
 $ node app.js
 ```
 
 
 ## Troubles
-### 起動しない
+### node.js起動時エラー : Error: listen EADDRINUSE
 - 原因: すでにプロセスが立ち上がっていてportが使用されている
 - 対策: portを使用しているプロセスをkillする
 
