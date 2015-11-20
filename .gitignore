@@ -15,3 +15,7 @@ config.json
 
 # gulpでbuildした後に作成されるファイルは除外
 public/build
+
+
+# direnv
+.envrc
