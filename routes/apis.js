@@ -179,7 +179,13 @@ function changeStatePromise(account) {
             if (err) {
                 reject(new Error(err));
             } else {
-                logger.send(account.id, account.status);
+                Account.dump(function(err, status) {
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        logger.send(status);                        
+                    }
+                });
                 resolve(account);
             }
         });

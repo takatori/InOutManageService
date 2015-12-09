@@ -40,6 +40,11 @@ AccountSchema.statics = {
         this.count({ status: 'in'})
             .exec(callback);
     },
+    dump: function(callback) {
+        this.find({}, {_id:0, id:1, status:1})
+            .sort({ id: 1})
+            .exec(callback);
+    },
     delete: function(id, callback) {
         this.remove({ id : id })
             .exec(callback);
