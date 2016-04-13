@@ -43,7 +43,7 @@ app.set('view engine', 'ect');
 // uriの設定
 // herokuで利用するときはprocess.env.MONGOLAB_URI
 // ローカルではapp.setting.envの設定を利用
-app.set('dbUrl', process.env.MONGOLAB_URI || config.db[process.env.NODE_ENV]);
+app.set('dbUrl', process.env.MONGOLAB_URI || config.db[process.env.NODE_ENV] || 'localhost');
 // connect mongoose to the mongo dbUrl
 mongoose.connect(app.get('dbUrl'), function(err, res) {
     if (err) {
