@@ -24,6 +24,10 @@ footer {
     margin: 5%;
 }
 
+.navbar-header {
+    background-color: #242424;
+}
+
 .user {
     margin-top: 50px;
 }
