@@ -1,4 +1,5 @@
 "use strict";
+import mongoose from 'mongoose'
 import { Schema }  from 'mongoose'
 import uniqueValidator from 'mongoose-unique-validator'
 import autoIncrement from 'mongoose-auto-increment'
@@ -12,8 +13,9 @@ const AccountSchema = new Schema({
     icon_image_url : { type: String }
 });
 
+autoIncrement.initialize(mongoose.connection);
 AccountSchema.plugin(uniqueValidator) // https://www.npmjs.com/package/mongoose-unique-validator
-AccountSchema.plugin(autoIncrement.plugin, { model: 'Account', field: 'id'}) // https://www.npmjs.com/package/mongoose-auto-increment
+AccountSchema.plugin(autoIncrement.plugin, { model: 'Account', field: 'id', startAt: 1, incrementBy:1}) // https://www.npmjs.com/package/mongoose-auto-increment
 
 // Method 
 AccountSchema.methods = {
