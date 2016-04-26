@@ -3,7 +3,7 @@
 // import the mongoose helper utilities
 import utils from './utils'
 import should from 'should'
-import Account from '../models/account'
+import Account from '../models/accounts'
 
 describe('Accounts: models', () => {
 
