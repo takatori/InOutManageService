@@ -1,26 +1,11 @@
-module.exports = {
+'use strict'
+
+const config = {
     db: {
-        production : "mongodb://mongoserv/InOutManageService",
-        development: "mongodb://localhost/InOutManageService",
-        test       : "mongodb://localhost/InOutManageService"
-    },
-    users: {
-        url: {
-            production : "http://inserv:3001",
-            development: "http://localhost:3001",
-            test       : "http://localhost:3001"
-        },
-        apis: {
-            current : "/apis/users/current"
-        }
-    },
-    "fluentd": {		
-        "server": {		
-            "ip": "192.168.0.23",		
-            "port": "24224"		
-        },		
-        "options": {		
-            "timeout": 3.0		
-        }
+        production : "mongodb://",
+        development: "mongodb://",
+        test       : "mongodb://localhost:27017"
     }
-};
+}
+
+export default config
