@@ -3,7 +3,7 @@ import { assert } from 'chai'
 import mongoose from 'mongoose'
 
 // ensure the NODE_ENV is set to 'test'
-process.env.NODE_ENV = test
+process.env.NODE_ENV = 'test'
 
 beforeEach(done => {
 
