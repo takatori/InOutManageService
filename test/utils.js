@@ -1,6 +1,7 @@
 'use strict'
 import { assert } from 'chai'
 import mongoose from 'mongoose'
+import config from '../config'
 
 // ensure the NODE_ENV is set to 'test'
 process.env.NODE_ENV = 'test'
@@ -19,7 +20,7 @@ beforeEach(done => {
             if (err) {
                 throw err;
             }
-            return claerDB()
+            return clearDB()
         })
     } else {
         return clearDB()
@@ -31,4 +32,6 @@ afterEach(done => {
     mongoose.disconnect()
     return done()
 })
+
+
 
