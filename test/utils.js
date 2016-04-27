@@ -6,7 +6,7 @@ import config from '../config'
 // ensure the NODE_ENV is set to 'test'
 process.env.NODE_ENV = 'test'
 
-beforeEach(done => {
+before(done => {
 
     function clearDB() {
         for (var i in mongoose.connection.collections) {
@@ -28,10 +28,9 @@ beforeEach(done => {
 })
 
 
-afterEach(done => {
+after(done => {
     mongoose.disconnect()
     return done()
 })
-
 
 
