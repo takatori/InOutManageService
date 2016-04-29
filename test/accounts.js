@@ -42,6 +42,15 @@ describe('Accounts: models', () => {
             })
         })
     })
+
+    describe('#list()', () => {
+        it('should fetch Accounts', done => {
+            Account.list((err, accounts) => {
+                should.not.exist(err)
+            })
+        })
+    })
+
 })
 
 
