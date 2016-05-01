@@ -37,27 +37,20 @@ AccountSchema.methods = {
 // Statics
 AccountSchema.statics = {
 
-    fetch: function(id, callback) {
-        this.findOne({ id : id })
-            .exec(callback)
+    fetch: function(id) {
+        return this.findOne({ id : id }).exec() // .exec() -> return Promise
     },
-    list: function(callback) {
-        this.find()
-            .sort({ id: 1 })
-            .exec(callback)
+    list: function() {
+        return this.find().sort({ id: 1 }).exec()
     },
-    countPeople: function(callback) {
-        this.count({ status: 'in'})
-            .exec(callback)
+    countInAccounts: function() {
+        this.count({ status: 'in'}).exec()
     },
-    dump: function(callback) {
-        this.find({}, {_id:0, id:1, status:1})
-            .sort({ id: 1})
-            .exec(callback)
+    dump: function() {
+        this.find({}, {_id:0, id:1, status:1}).sort({ id: 1}).exec()
     },
-    delete: function(id, callback) {
-        this.remove({ id : id })
-            .exec(callback)
+    delete: function(id) {
+        this.remove({ id : id }).exec()
     }
 };
 
