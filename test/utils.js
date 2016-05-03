@@ -62,7 +62,11 @@ before(() => {
 
 beforeEach(() => {
     return clearDB()
-        .then(InsertDummyAccounts(accounts))
+        .then(() => {return InsertDummyAccounts(accounts)})
+        .then(accounts => {
+            accounts[0].changeState()
+            accounts[1].changeState()            
+        })
 })
 
 
