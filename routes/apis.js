@@ -2,12 +2,12 @@
  * @fileoverview 入退室管理システムAPI
  * 
  */
-var express = require('express');
-var router = express.Router();
-var request = require('request');
-var Account = require('../models/accounts').Account;
-var config = require('../config');
-var logger = require('../utils/logger.js');
+import express from 'express'
+const router = express.Router()
+import request from 'request'
+import Account from '../models/accounts'
+import config from '../config'
+import logger from '../utils/logger'
 
 /**
  * 入退室管理システムを利用しているユーザアカウント一覧を表示
@@ -15,12 +15,12 @@ var logger = require('../utils/logger.js');
  */
 router.get('/accounts', function(req, res, next) {
 
-    loadAccountListPromise()
+    Account.list()
         .then(function(accounts){
-            res.status(200).json(accounts);            
+            res.json({accounts: accounts});
         })
         .catch(function(err){
-            res.status(500).json(err);            
+            res.status(500).json(err);
         });
 });
 
