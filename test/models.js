@@ -5,7 +5,7 @@ import utils from './utils'
 import should from 'should'
 import Account from '../models/accounts'
 
-describe('Accounts: models', () => {
+describe('models', () => {
     
     describe('#create()', () => {
         it('should create a new Account', () => {
@@ -17,7 +17,7 @@ describe('Accounts: models', () => {
             };
 
             return Account.create(account)
-                .then(function(account){
+                .then(account => {
                     account.name.should.equal('takatori')
                     account.password.should.equal('satoshi')
                     account.icon_image_url.should.equal('https://placeimg.com/640/480/any')
@@ -34,7 +34,7 @@ describe('Accounts: models', () => {
             };
             
             return Account.create(account)
-                .then(function(result){
+                .then(result => {
                     return Account.fetch(result.id)
                 })
                 .then(account => {
