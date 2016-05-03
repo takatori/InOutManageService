@@ -2,20 +2,22 @@
 import mongoose from 'mongoose'
 import { Schema }  from 'mongoose'
 import uniqueValidator from 'mongoose-unique-validator'
-import autoIncrement from 'mongoose-auto-increment'
+import uuid from 'uuid'
+// import autoIncrement from 'mongoose-auto-increment' // Promise.allと併用できない
 
 // アカウント情報を管理するスキーマ
 const AccountSchema = new Schema({
-    id             : { type: String, required: true, unique:true},
+    id             : { type: String, required: true, default: uuid.v4},
     name           : { type: String, required: true},
     password       : { type: String, required: true},
     status         : { type: String, default:'out' }, // 在室中か否かを，在室中ならばin, 外出中ならout
     icon_image_url : { type: String }
 });
 
-autoIncrement.initialize(mongoose.connection);
+// autoIncrement.initialize(mongoose.connection);
 AccountSchema.plugin(uniqueValidator) // https://www.npmjs.com/package/mongoose-unique-validator
-AccountSchema.plugin(autoIncrement.plugin, { model: 'Account', field: 'id', startAt: 1, incrementBy:1}) // https://www.npmjs.com/package/mongoose-auto-increment
+// AccountSchema.plugin(autoIncrement.plugin, { model: 'Account', field: 'id', startAt: 1, incrementBy:1}) // https://www.npmjs.com/package/mongoose-auto-increment
+
 
 // Method 
 AccountSchema.methods = {

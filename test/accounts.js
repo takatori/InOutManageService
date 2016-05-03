@@ -6,9 +6,9 @@ import should from 'should'
 import Account from '../models/accounts'
 
 describe('Accounts: models', () => {
-
+    
     describe('#create()', () => {
-        it('should create a new Account', done => {
+        it('should create a new Account', () => {
             // Create a Account object to pass
             const account = {
                 name: 'takatori',
@@ -16,41 +16,44 @@ describe('Accounts: models', () => {
                 icon_image_url: 'https://placeimg.com/640/480/any'
             };
 
-            
-            Account.create(account, (err, createdAccount) => {
-                // Confirm that an error does not exist
-                should.not.exist(err)
-                createdAccount.id.should.equal(1)
-                createdAccount.name.should.equal('takatori')
-                createdAccount.password.should.equal('satoshi')
-                createdAccount.icon_image_url.should.equal('https://placeimg.com/640/480/any')
-                done()
+            return Account.create(account)
+                .then(function(account){
+                    account.name.should.equal('takatori')
+                    account.password.should.equal('satoshi')
+                    account.icon_image_url.should.equal('https://placeimg.com/640/480/any')
+                })
             })
         })
-    })
 
     describe('#fetch()', () => {
-        it('should fetch a Account by id', done => {
-            Account.fetch(1, (err, account) => {
-                should.not.exist(err)
-                should.exist(account)
-                account.id.should.equal(1)
-                account.name.should.equal('takatori')
-                account.password.should.equal('satoshi')
-                account.icon_image_url.should.equal('https://placeimg.com/640/480/any')
-                done()
-            })
+        it('should fetch a Account by id', () => {
+            const account = {
+                name: 'takatori',
+                password: 'satoshi',
+                icon_image_url: 'https://placeimg.com/640/480/any'
+            };
+            
+            return Account.create(account)
+                .then(function(result){
+                    return Account.fetch(result.id)
+                })
+                .then(account => {
+                    account.name.should.equal('takatori')
+                    account.password.should.equal('satoshi')
+                    account.icon_image_url.should.equal('https://placeimg.com/640/480/any')
+                })
         })
     })
 
     describe('#list()', () => {
-        it('should fetch Accounts', done => {
-            Account.list((err, accounts) => {
-                should.not.exist(err)
-            })
+        it('should fetch Accounts', () => {
+            return Account.list()
+                .then(accounts => {
+                    accounts.should.lengthOf(3)
+                })
         })
     })
-
+    
 })
 
 
