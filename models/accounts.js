@@ -22,17 +22,17 @@ AccountSchema.plugin(uniqueValidator) // https://www.npmjs.com/package/mongoose-
 // Method 
 AccountSchema.methods = {
     // 状態を変更
-    changeState: function(callback) {
+    changeState: function() {
         if (this.status === 'in') this.status = 'out'
         else this.status = 'in'
-        this.save(callback)
+        return this.save()
     },
 
-    update: function(name, password, icon_image_url, callback) {
+    update: function(name, password, icon_image_url) {
         this.name = name
         this.password = password
         this.icon_image_url = icon_image_url
-        this.save(callback)
+        return this.save()
     }
 };
 
@@ -42,17 +42,20 @@ AccountSchema.statics = {
     fetch: function(id) {
         return this.findOne({ id : id }).exec() // .exec() -> return Promise
     },
+    fetchInAccounts: function() {
+        return this.find({ status : 'in' }).exec() // .exec() -> return Promise
+    },    
     list: function() {
         return this.find().sort({ id: 1 }).exec()
     },
     countInAccounts: function() {
-        this.count({ status: 'in'}).exec()
+        return this.count({ status: 'in'}).exec()
     },
-    dump: function() {
-        this.find({}, {_id:0, id:1, status:1}).sort({ id: 1}).exec()
+    all: function() {
+        return this.find({}, {_id:0, id:1, status:1}).sort({ id: 1}).exec()
     },
     delete: function(id) {
-        this.remove({ id : id }).exec()
+        return this.remove({ id : id }).exec()
     }
 };
 
