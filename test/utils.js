@@ -12,6 +12,7 @@ process.env.NODE_ENV = 'test'
     
 const accounts = [
     {
+        id: '1',
         name: 'takatori',
         password: 'satoshi',
         icon_image_url: 'https://placeimg.com/640/480/any'
@@ -44,7 +45,7 @@ function promiseAccount(account) {
 }
 
 function InsertDummyAccounts(accounts) {
-    const promises = accounts.map(account => { return promiseAccount(account)})
+    const promises = accounts.map(account => promiseAccount(account))
     return Promise.all(promises)
 }
 
@@ -62,10 +63,9 @@ before(() => {
 
 beforeEach(() => {
     return clearDB()
-        .then(() => {return InsertDummyAccounts(accounts)})
+        .then(() => InsertDummyAccounts(accounts))
         .then(accounts => {
             accounts[0].changeState()
-            accounts[1].changeState()            
         })
 })
 
@@ -75,9 +75,9 @@ afterEach(() => {
 })
 
 
-after(done => {
+after(() => {
+    // clearDB()
     mongoose.disconnect()
-    return done()
 })
 
 

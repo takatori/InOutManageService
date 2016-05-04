@@ -47,25 +47,16 @@ describe('models', () => {
         it('should fetch in Accounts', () => {
             return Account.fetchInAccounts()
                 .then(accounts => {
-                    accounts.should.lengthOf(2)
+                    accounts.should.lengthOf(1)
                 })
         })
     })    
-
-    describe('#list()', () => {
-        it('should fetch Accounts', () => {
-            return Account.list()
-                .then(accounts => {
-                    accounts.should.lengthOf(3)
-                })
-        })
-    })
 
     describe('#countInAccounts', () => {
         it('should count in accounts', () => {
             return Account.countInAccounts()
                 .then(result => {
-                    result.should.equal(2)
+                    result.should.equal(1)
                 })
         })
     })
@@ -84,11 +75,8 @@ describe('models', () => {
 
     describe('#delete', () => {
         it('should delete the account by id', () => {
-            return Account.list()
-                .then(accounts => {
-                    Account.delete(accounts[0].id)
-                })
-                .then(() => Account.list())
+            return Account.delete(1, 'satoshi')
+                .then(() => Account.all())
                 .then(accounts => {
                     accounts.should.lengthOf(2)
                 })
@@ -100,8 +88,7 @@ describe('models', () => {
         it('should change a account state', () => {
             return Account.fetchInAccounts()
                 .then(accounts => {
-                    accounts[0].changeState()
-                    accounts[1].changeState()
+                    return accounts[0].changeState()
                 })
                 .then(() => Account.fetchInAccounts())
                 .then(accounts => {
@@ -112,15 +99,14 @@ describe('models', () => {
 
     describe('#update', () => {
         it('should update a account', () => {
-            return Account.list()
-                .then(accounts => {
-                    accounts[0].update('update', 'update', 'http://....')
-                    return accounts[0].id
+            return Account.fetch(1)
+                .then(account => {
+                    account.update('update', 'satoshi', 'updated_password', 'http://....')
                 })
-                .then((id) => Account.fetch(id))
+                .then(() => Account.fetch(1))
                 .then(account => {
                     account.name.should.equal('update')
-                    account.password.should.equal('update')
+                    account.password.should.equal('updated_password')
                     account.icon_image_url.should.equal('http://....')      
                 })
         })
