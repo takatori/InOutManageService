@@ -28,9 +28,13 @@ AccountSchema.methods = {
         return this.save()
     },
 
-    update: function(name, password, icon_image_url) {
+    update: function(name, password, new_password, icon_image_url) {
+
+        if(this.password != password) {
+            return Promise.reject('ERROR: password do not match')            
+        }
         this.name = name
-        this.password = password
+        this.password = new_password
         this.icon_image_url = icon_image_url
         return this.save()
     }
@@ -43,19 +47,22 @@ AccountSchema.statics = {
         return this.findOne({ id : id }).exec() // .exec() -> return Promise
     },
     fetchInAccounts: function() {
-        return this.find({ status : 'in' }).exec() // .exec() -> return Promise
+        return this.find({ status : 'in' }, { password: 0 }).exec() // .exec() -> return Promise
     },    
-    list: function() {
-        return this.find().sort({ id: 1 }).exec()
-    },
     countInAccounts: function() {
         return this.count({ status: 'in'}).exec()
     },
     all: function() {
-        return this.find({}, {_id:0, id:1, status:1}).sort({ id: 1}).exec()
+        return this.find({}, { password: 0 }).sort({ id: 1 }).exec()
     },
-    delete: function(id) {
-        return this.remove({ id : id }).exec()
+    delete: function(id, password) {
+        return this.fetch(id)
+            .then(account => {
+                if (account.password != password) {
+                    return Promise.reject('ERROR: password do not match')            
+                }
+                return this.remove({ id : id }).exec()                            
+            })
     }
 };
 
