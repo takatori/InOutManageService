@@ -19,3 +19,6 @@ public/build
 
 # direnv
 .envrc
+
+# log
+*.log
