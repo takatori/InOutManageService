@@ -1,17 +1,18 @@
 var webpack = require('webpack');
 
 module.exports = {
-  context: __dirname + '/src',
+  context: __dirname + '/public',
   entry: {
-    javascript: './app.jsx',
-    html: './index.html'
+    javascript: './js/app.jsx'
+    // html: './views/index.html'
   },
   output: {
     path: __dirname + '/dist',
     filename: 'app.js'
   },
+  // ファイル名解決のための設定
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'] // 拡張子を省略できるようにする
   },  
   devtool: 'inline-source-map',
   plugins: [],
