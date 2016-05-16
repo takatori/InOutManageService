@@ -7,7 +7,7 @@ module.exports = {
     // html: './views/index.html'
   },
   output: {
-    path: __dirname + '/dist',
+    path: __dirname + '/public/dist',
     filename: 'app.js'
   },
   // ファイル名解決のための設定

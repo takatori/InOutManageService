@@ -1,7 +1,7 @@
 function accounts(state=[], action) {
     switch(action.type) {
     case 'ADD_ACCOUNT':
-        return [
+        return [　
                 ...state,
             {}
         ]

@@ -3,4 +3,14 @@ import accounts from './accounts'
 
 const app = combineReducers({accounts})
 
-export accounts
+export default app
+
+
+
+
+
+
+
+
+
+
