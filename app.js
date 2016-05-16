@@ -10,12 +10,14 @@ var mongoose     = require('mongoose');
 var session      = require('express-session');
 
 // ******************* Service Setting ***************************************
-var config = require('./config');
+// var config = require('./config');
 var routes = require('./routes/index');
 var apis   = require('./routes/apis');
 
 var app = express();
 var port   = process.env.PORT || 3000;
+
+import config from './config'
 
 // ******************* Logging Setting ***************************************
 // fluentd初期化
@@ -24,7 +26,6 @@ var fluentLogger = require('fluent-logger').configure('inout', {
     host: config.fluentd.server.ip,
     port: config.fluentd.server.port,
     timeout: config.fluentd.options.timeout
-    /*
     host: config.get("fluentd.server.ip"),
     port: config.get("fluentd.server.port"),
     timeout: config.get("fluentd.options.timeout")
@@ -44,8 +45,9 @@ app.set('view engine', 'ect');
 // uriの設定
 // herokuで利用するときはprocess.env.MONGOLAB_URI
 // ローカルではapp.setting.envの設定を利用
-// app.set('dbUrl', process.env.MONGOLAB_URI || config.db[process.env.NODE_ENV] || 'localhost');
-app.set('dbUrl', process.env.MONGOLAB_URI || 'localhost');
+
+app.set('dbUrl', process.env.MONGOLAB_URI || config.db[process.env.NODE_ENV] || 'localhost');
+
 // connect mongoose to the mongo dbUrl
 mongoose.connect(app.get('dbUrl'), function(err, res) {
     if (err) {
