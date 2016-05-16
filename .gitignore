@@ -13,9 +13,8 @@ config.json
 # bin使ってないので除外
 ./bin
 
-# gulpでbuildした後に作成されるファイルは除外
-public/build
-
+# webpackでbuildした後に作成されるファイルは除外
+public/dist
 
 # direnv
 .envrc
