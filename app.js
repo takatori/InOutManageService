@@ -19,6 +19,7 @@ var port   = process.env.PORT || 3000;
 
 // ******************* Logging Setting ***************************************
 // fluentd初期化
+/*
 var fluentLogger = require('fluent-logger').configure('inout', {
     host: config.fluentd.server.ip,
     port: config.fluentd.server.port,
@@ -26,8 +27,8 @@ var fluentLogger = require('fluent-logger').configure('inout', {
     /*
     host: config.get("fluentd.server.ip"),
     port: config.get("fluentd.server.port"),
-    timeout: config.get("fluentd.options.timeout")*/
-});
+    timeout: config.get("fluentd.options.timeout")
+});*/
 
 // ******************* View Setting ***************************************
 // view engine setup
@@ -43,13 +44,14 @@ app.set('view engine', 'ect');
 // uriの設定
 // herokuで利用するときはprocess.env.MONGOLAB_URI
 // ローカルではapp.setting.envの設定を利用
-app.set('dbUrl', process.env.MONGOLAB_URI || config.db[process.env.NODE_ENV] || 'localhost');
+// app.set('dbUrl', process.env.MONGOLAB_URI || config.db[process.env.NODE_ENV] || 'localhost');
+app.set('dbUrl', process.env.MONGOLAB_URI || 'localhost');
 // connect mongoose to the mongo dbUrl
 mongoose.connect(app.get('dbUrl'), function(err, res) {
     if (err) {
-        console.log ('ERROR connecting to: ' + app.get('dbUrl') + '.' + err);
+        // console.log ('ERROR connecting to: ' + app.get('dbUrl') + '.' + err);
     } else {
-        console.log ('Succeeded connecting to: ' + app.get('dbUrl'));
+        // console.log ('Succeeded connecting to: ' + app.get('dbUrl'));
     }
 });
 
