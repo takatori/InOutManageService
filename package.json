@@ -6,7 +6,7 @@
     "node": "v0.12.7",
     "npm": "2.11.3"
   },
-    "scripts": {
+  "scripts": {
     "start": "babel-node app.js",
     "front-start": "webpack-dev-server",
     "build": "webpack",
@@ -43,6 +43,7 @@
     "react-dom": "^15.0.1",
     "react-redux": "^4.4.5",
     "redux": "^3.5.1",
+    "redux-thunk": "^2.1.0",
     "request": "^2.64.0",
     "serve-favicon": "~2.3.0",
     "should": "~8.3.0",
