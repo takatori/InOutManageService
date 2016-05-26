@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 import accounts from './accounts'
 
-const app = combineReducers({accounts})
+const rootReducer = combineReducers({accounts})
 
-export default app
+export default rootReducer
 
 
 

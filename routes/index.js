@@ -8,7 +8,7 @@ router.get('/', (req, res, next) => {
 
 
 /* GET account add page */
-reouter.get('/accounts/add', (req, res, next) => {
+router.get('/accounts/add', (req, res, next) => {
     res.render('add');
 })
 
