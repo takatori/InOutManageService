@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { fetchAccountsIfNeeded } from '../actions'
+import App from '../components/App'
 
-class App extends Component {
+class AsyncApp extends Component {
     constructor(props) {
         super(props)
     }
@@ -10,9 +11,14 @@ class App extends Component {
          const { dispatch } = this.props
         dispatch(fetchAccountsIfNeeded())
     }
+    render() {
+        return (
+                <App />
+        )
+    }
 }
 
-App.propTypes = {
+AsyncApp.propTypes = {
     accounts: PropTypes.array.isRequired,
     dispatch: PropTypes.func.isRequired
 }
@@ -21,4 +27,4 @@ function mapStateToProps(state){
     return { accounts: state.accounts }
 }
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps)(AsyncApp)
