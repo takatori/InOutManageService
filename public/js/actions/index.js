@@ -59,7 +59,7 @@ function fetchAccounts(store) {
         // dispatchメソッドの返り値として渡される
         // 本ケースではpromiseオブジェクトを返すが
         // thunkではpromiseは必須ではない。
-        return fetch('localhost:3000/apis/accounts')
+        return fetch('http://localhost:3000/apis/accounts')
             .then(response => response.json())
             .then(json => {
                 console.log(json)
