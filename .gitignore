@@ -21,3 +21,6 @@ public/dist
 
 # log
 *.log
+
+# tern
+.tern-*
