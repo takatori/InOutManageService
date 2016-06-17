@@ -3,7 +3,7 @@ var webpack = require('webpack');
 module.exports = {
   context: __dirname + '/public',
   entry: {
-    javascript: './js/app.jsx'
+    javascript: './js/index.js'
     // html: './views/index.html'
   },
   output: {

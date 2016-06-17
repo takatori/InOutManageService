@@ -2,15 +2,19 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { fetchAccountsIfNeeded } from '../actions'
 import App from '../components/App'
+import AddAccount from './AddAccount'
 
 class AsyncApp extends Component {
+    
     constructor(props) {
         super(props)
     }
+    
     componentDidMount() {
          const { dispatch } = this.props
         dispatch(fetchAccountsIfNeeded())
     }
+    
     render() {
         return (
                 <App />
